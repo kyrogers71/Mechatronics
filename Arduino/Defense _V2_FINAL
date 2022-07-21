@@ -1,3 +1,9 @@
+//---------------------------------------------------------------------
+//---------------------DEFENSE-----------------------------------------
+//---------------------------------------------------------------------
+
+
+
 // begin license header
 //
 // This file is part of Pixy CMUcam5 or "Pixy" for short
@@ -155,6 +161,7 @@ void loop()
       analogWrite(PWMBL, 0);  
       analogWrite(PWMAR, 0);
       analogWrite(PWMBR, 0);
+      delay(60000);
   }
   else if(dist_check<-122){
    
@@ -170,5 +177,6 @@ void loop()
       analogWrite(PWMBL, 0);  
       analogWrite(PWMAR, 0);
       analogWrite(PWMBR, 0);
+      delay(60000);
   }
 }
