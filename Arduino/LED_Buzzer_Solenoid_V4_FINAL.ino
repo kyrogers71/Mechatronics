@@ -29,22 +29,13 @@ const int soundLED = 13;          //LED to indicate that the buzzer has been hea
 const int trigPin = 11;           //connects to the trigger pin on the distance sensor
 const int echoPin = 12;           //connects to the echo pin on the distance sensor
 const int solenoidPin = 6;        //set output pin for piston trigger
-const int stopPin = 3;            //output pin to tell wheels to stop on Mega
-const int soundPin = 10;           //output pin to tell Mega the buzzer sound has been heard
+const int stopPin = 2;            //output pin to tell wheels to stop on Mega
+const int soundPin = 8;           //output pin to tell Mega the buzzer sound has been heard
 
-const int redLED = 9;
-const int greenLED = 8;
-const int button = 7;
-const int outputState = 2;
-//define pinouts for LED offense/defense switch
 
 float distance = 0;               //stores the distance measured by the distance sensor
 int soundflag = 0;              //flag for if we have heard start sound yet
 int buzzer = 0;
-
-int buttonState = 0;
-int robotState = 0;
-int timer = 0;                  //states for LED offense/defense
 
 
 void setup()
@@ -59,70 +50,32 @@ void setup()
   digitalWrite(soundPin, LOW);   //set default of sound pin to low so robot sits at rest
 
   samplingPeriod = round(1000000*(1.0/SAMPLING_FREQUENCY)); //Period in microseconds
-
-  pinMode(redLED, OUTPUT);
-  pinMode(greenLED, OUTPUT);
-  pinMode(button, INPUT);
-  //declare LEDs as outputs, button as input
-  digitalWrite(redLED, LOW);
-  digitalWrite(greenLED, LOW);
-  //for now let's make them both off to start, then we can change later to default offense if need be
 }
 
-void loop() {
-
-  while (timer < 60){
-  if (digitalRead(button) == HIGH) {
-    ++buttonState;
-    delay(100);
-  }
-  if ((buttonState & 1) == 0){
-    // turn red LED on (defense):
-    digitalWrite(redLED, HIGH);
-    digitalWrite(greenLED, LOW);
-    robotState = 0;
-    delay(100);
-  } else {
-    // turn green LED on (offense):
-    digitalWrite(greenLED, HIGH);
-    digitalWrite(redLED, LOW);
-    robotState = 1;
-    delay(100);
-  }
-  //Serial.print(robotState);
-  if (robotState ==0){
-    digitalWrite(outputState, LOW);}
-  else {
-    digitalWrite(outputState, HIGH);}
-
-  ++timer;
-  Serial.print(timer);
-  }
-  
-  //Serial.print(buzzer);
+void loop()
+{
   if (buzzer == 0){
     buzzer = isSoundOn();}
-  if (buzzer == 1){              //comment this back in to use the sound sensor
+  if (buzzer == 1){                       //comment this back in to use the sound sensor
       digitalWrite(soundLED, HIGH);       // turn the LED on (HIGH is the voltage level)
       digitalWrite(soundPin, HIGH);       // tell the Mega that the sound has been heard
 }
       
-  distance = getDistance();        //variable to store the distance measured by the sensor
+  distance = getDistance();               //variable to store the distance measured by the sensor
 
-  Serial.print(distance);          //print the distance that was measured
-  Serial.println(" in");           //print units after the distance
+  //Serial.print(distance);               //print the distance that was measured
+  //Serial.println(" in");                //print units after the distance
   
-if (distance < 3 && buzzer ==1){   //<---------------SET DISTANCE FOR BALL TO SENSOR HERE------------------------
+if (distance < 3 && buzzer == 1)    //<---------------SET DISTANCE FOR BALL TO SENSOR HERE------------------------
+{
   digitalWrite(stopPin, HIGH);     //send signal to Mega to stop wheels
   digitalWrite(solenoidPin, HIGH); //extend the piston
-  delay(1500);                     //wait 1.5 seconds with piston extended
+  delay(500);                     //wait 1.5 seconds with piston extended
   digitalWrite(solenoidPin, LOW);  //close the piston
-  delay(60000);}                     //WAIT FOR 1 minute TO AVOID GOING AGAIN
-else {Serial.print("Waiting to shoot...");}
+  delay(60000);
+}                                  //WAIT FOR 1 minute TO AVOID GOING AGAIN
 
   delay(50);                       //delay 50ms between each reading
-  //Serial.print(buzzer);
-  //Serial.print("    ");
 }
 
 //------------------FUNCTIONS-------------------------------
@@ -153,7 +106,7 @@ for(int i=0; i<SAMPLES; i++)
     //Serial.println(peak);                 //Print out the most dominant frequency.
     if(peak>2000 and peak<2200){
       soundflag = 1;
-      Serial.println("2093 Detected, Manchester United is going down"); 
+      //Serial.println("2093 Detected, Manchester United is going down"); 
       //Serial.println(soundflag);
       //Serial.println(" ");                      //comment back in to use the sound sensor
       }
