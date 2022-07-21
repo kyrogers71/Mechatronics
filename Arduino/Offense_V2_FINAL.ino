@@ -1,3 +1,9 @@
+//---------------------------------------------------------
+//--------------------OFFENSE------------------------------
+//---------------------------------------------------------
+
+
+
 //PIN VARIABLES
 //the motor will be controlled by the motor A pins on the motor driver
 const int AIN1L = 42;           //control pin 1 on the motor driver for the right motor
@@ -62,7 +68,7 @@ void loop() {
    analogWrite(PWMBL, abs(motorSpeed));  
    analogWrite(PWMAR, abs(motorSpeed));
    analogWrite(PWMBR, abs(motorSpeed));
-   Serial.println(" PIN 2 IS ON ");
+   //Serial.println(digitalRead(Mov_pin));
    }
    
    if(digitalRead(Stop_pin) == HIGH)
@@ -80,7 +86,7 @@ void loop() {
    analogWrite(PWMBL, 0);  
    analogWrite(PWMAR, 0);
    analogWrite(PWMBR, 0);
-   Serial.println(" STOP IT! ");
+   //Serial.println(" STOP IT! ");
    do_nothing();
    }
    if(digitalRead(Mov_pin) == LOW){
@@ -97,29 +103,11 @@ void loop() {
    analogWrite(PWMBL, 0);  
    analogWrite(PWMAR, 0);
    analogWrite(PWMBR, 0);
-    Serial.println(" PIN 2 IS OFF ");
+   //Serial.println(" PIN 2 IS OFF ");
    }
-   
-   /*if(digitalRead(Stop_pin) == LOW){
-    Serial.println(" NO STOP!! ");
-   }
-   /*digitalWrite(AIN1L, LOW);                         //set pin 1 to high
-   digitalWrite(AIN2L, HIGH);                          //set pin 2 to low
-   digitalWrite(BIN1L, LOW);                        
-   digitalWrite(BIN2L, HIGH);
-   digitalWrite(AIN1R, LOW);
-   digitalWrite(AIN2R, HIGH);
-   digitalWrite(BIN1R, LOW);
-   digitalWrite(BIN2R, HIGH);
-   analogWrite(PWMAL, abs(motorSpeed));                 //now that the motor direction is set, drive it at the entered speed
-   analogWrite(PWMBL, abs(motorSpeed));  
-   analogWrite(PWMAR, abs(motorSpeed));
-   analogWrite(PWMBR, abs(motorSpeed));
-   delay(3000);*/
-}
-
+} 
 /********************************************************************************/
 void do_nothing()                       //function for driving the right motor
 {
-   Serial.println("Do nothing!");
+   //Serial.println("Do nothing!");
 }
